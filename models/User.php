@@ -6,6 +6,7 @@
 
     public $username;
     public $password;
+    public $hashedPassword;
     public $email;
     public $first_name;
     public $last_name;
@@ -13,6 +14,7 @@
     // Constructor with DB
     public function __construct($db) {
       $this->conn = $db;
+      
     }
 
     // Check user login
@@ -29,7 +31,7 @@
         last_name
       FROM
         ' . $this->table . '
-      WHERE BINARY
+      WHERE 
         username = :username AND BINARY password = :password';
 
       // Prepare statement
@@ -38,6 +40,7 @@
       // Clean data
       $this->username = htmlspecialchars(strip_tags($this->username));
       $this->password = htmlspecialchars(strip_tags($this->password));
+      
 
       // Bind data
       $stmt->bindParam(':username', $this->username);
